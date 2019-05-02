@@ -2,6 +2,7 @@
 
 var ccFile = require('../../utils/calendar-converter.js')
 var calendarConverter = new ccFile.CalendarConverter();
+ 
 
 //月份天数表
 var DAY_OF_MONTH = [
@@ -67,7 +68,6 @@ var refreshPageData = function(year, month, day){
         var dEx = calendarConverter.solar2lunar(d);
       
         pageData.arrInfoEx[i] = dEx;
-        console.log(dEx);
         if ("" != dEx.lunarFestival)
         {
             pageData.arrInfoExShow[i] = dEx.lunarFestival;
@@ -98,27 +98,23 @@ var curMonth = curDate.getMonth();
 var curYear = curDate.getFullYear();
 var curDay = curDate.getDate()-1;
 refreshPageData(curYear, curMonth, curDay);
+//console.log (ccFile.hCal(curYear))
+
+
 
 Page({
    
     data:pageData,
  
     onLoad: function(options){
-      console.log(curDate.getDate())
+      //console.log(ccFile.hFtv);
     },
 
     goToday: function(e){
-        curDate = new Date();
-        console.log(curDate);
-       
-        curMonth = curDate.getMonth();
-      console.log(curMonth);
-       
-        curYear = curDate.getFullYear();
-      console.log(curYear);
-       
+        curDate = new Date();           
+        curMonth = curDate.getMonth();       
+        curYear = curDate.getFullYear();       
         curDay = curDate.getDate()-1;
-        console.log(curDay);
         refreshPageData(curYear, curMonth, curDay);
         this.setData(pageData);
     },

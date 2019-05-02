@@ -53,6 +53,17 @@ var nStr2 = new Array('初', '十', '廿', '卅', '□');
 // var monthName = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
 var cmonthName = new Array('正', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '腊');
 
+//回族节日
+var hFtv=new Array(
+  "1001 开斋节",
+  "1210 古尔邦节",
+  "0312 圣纪节",
+  "0110 阿舒拉日",
+  "0727 登宵夜",
+  "0815 拜拉特夜",
+  "0901 盖德尔夜",
+  "0101 新年");
+
 //公历节日 *表示放假日
 var sFtv = new Array(
     "0101*元旦",
@@ -79,12 +90,11 @@ var sFtv = new Array(
     "1224 平安夜",
     "1225 圣诞节");
 
-//某月的第几个星期几。 5,6,7,8 表示到数第 1,2,3,4 个星期几
+//某月的第几个星期几。 5,6,7,8 表示到数第月 1,2,3,4 个星期几
 var wFtv = new Array(
-    //一月的最后一个星期日（月倒数第一个星期日）
+    //一月的最后一个星期日（倒数第一个星期日）
     "0520 母亲节",
-    "0630 父亲节",
-    "1144 感恩节");
+    "0630 父亲节");
 
 //农历节日
 var lFtv = new Array(
@@ -99,6 +109,62 @@ var lFtv = new Array(
     "1208 腊八节",
     "1223 小年",
     "0100*除夕");
+
+//回历
+var monthD=new Array(
+  1,2,1,0,1,0,1,1,0,1,0,1
+)
+
+var monthDay =new Array(30,31,28)
+
+var hmonthDay =new Array(29,30)
+
+// function h_FconvDay (fmonth,fday){
+//   this.month=fmonth;
+//   this.day=fday;
+// }
+
+//回历转换
+function hcanlcon(hcal,fmonth,fday){
+  var sum=0 ,that={};
+  for(var i=0;i<fmonth;i++){
+    sum+=hmonthDay[i%2]
+  }
+ sum= sum-1;
+  that=new Date(hcal.year,hcal.month-1,hcal.day+sum);
+  return that
+}
+
+//回历值
+function hcalenderEle (hyear,year,month,day){
+  this.hyear=hyear;
+  this.year = year;
+ this.month=month;
+ this.day=day;
+}
+
+//回历转换算法
+function hCal(year){
+ var that={},hyear,hday,hmonth,all,i,floa,year
+  hyear=parseInt(year-622+(year-622)/32)
+ 
+  floa = ((0.970233 * (hyear - 1) + 622.5479) - Math.floor((0.970233 * (hyear - 1) + 622.5479)))
+  year = parseInt((0.970233 * (hyear - 1) + 622.5479))
+   all = parseInt(floa*365.2425)
+  for(i=0;all>31;i++){
+    // if((i==2)&&((year%4==0)&&(year%100!=0)||(year%400==0))){
+    if (isLeap(year)&&i==2) {
+   all-=monthDay[monthD[i]]+1;
+      //console.log(monthDay[monthD[i]]); 
+    }
+   else{
+     all-=monthDay[monthD[i]];
+      //console.log(monthDay[monthD[i]]);
+   } 
+  }
+  that=new hcalenderEle(hyear,year,i+1,all-5)
+  return that
+}
 
 //====================================== 返回农历 y年的总天数
 function lYearDays(y) {
@@ -335,6 +401,7 @@ function calElement(sYear, sMonth, sDay, week, lYear, lMonth, lDay, isLeap, cYea
 ///////////////////////////////////////////////////////////////
 // date's month should be --, example: 2012-5-21 -> new Date(2012, 4, 21)
 // no matter solar or lunar
+var wDay;
 function CalendarConverter() {
     this.solar2lunar = function (date) {
         var sYear = date.getFullYear(),
@@ -367,6 +434,9 @@ function CalendarConverter() {
 
 }
 function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, isLeap) {
+  var hcal={};
+  hcal= hCal(sYear);
+
     var cYear, cMonth, cDay, that = {};
     ////////年柱 1900年立春后为庚子年(60进制36)
     if (sMonth < 2) {
@@ -418,20 +488,22 @@ function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, 
 
     //月周节日
     for (i = 0, item; item = wFtv[i]; i++) {
-        if (item.match(/^(\d{2})(\d)(\d)([\s\*])(.+)$/)) {
-            if (Number(RegExp.$1) == (sMonth + 1)) {
+         if (item.match(/^(\d{2})(\d)(\d)([\s\*])(.+)$/)) {
+            if (Number(RegExp.$1) == (sMonth + 1)) { 
                 tmp1 = Number(RegExp.$2);
-                tmp2 = Number(RegExp.$3);
-                if (tmp1 < 5) {
-                    var wFtvDate = (tmp2 == 0 ? 7 : 0) + (tmp1 - 1) * 7 + tmp2;
-                    if (wFtvDate == sDay) {
-                        that.solarFestival += RegExp.$5 + ' ';
-                        break;
-                    }
-                }
-            }
-        }
-    }
+               tmp2 = Number(RegExp.$3);
+        
+              if (((sMonth + 1) == 5 && (sDay > 8 && sDay < 14)) || ((sMonth + 1) == 6&&(sDay>15 && sDay< 21))){
+            
+                
+                if (new Date(sYear, sMonth, sDay).getDay()==0){  
+                        that.solarFestival += RegExp.$5  + ' ';
+                break;
+              }
+              }
+              }
+              }
+              }
 
     // 农历节日
     for (i = 0, item; item = lFtv[i]; i++) {
@@ -446,6 +518,19 @@ function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, 
             }
         }
     }
+    //回族节日
+  for (i = 0, item; item = hFtv[i]; i++) {
+    if (item.match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
+      tmp1 = Number(RegExp.$1);
+      tmp2 = Number(RegExp.$2);
+      //console.log(hcanlcon(hcal, tmp1, tmp2).getMonth())
+      if (sMonth == hcanlcon(hcal, tmp1, tmp2).getMonth() && sDay == hcanlcon(hcal, tmp1, tmp2).getDate()){
+        console.log("进入")
+        that.solarFestival += RegExp.$4 + ' ';
+        break;
+      }
+    }
+  }
 
     return that;
 }
@@ -486,5 +571,7 @@ function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, 
    */
 
 module.exports = {
-  CalendarConverter: CalendarConverter
+  CalendarConverter: CalendarConverter,
+   hCal:hCal
+
 }
