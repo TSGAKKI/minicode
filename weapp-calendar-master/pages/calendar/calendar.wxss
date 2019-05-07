@@ -1,6 +1,4 @@
-.tapchange{
-  background-color: red;
-}
+
 .calendar-root{
     font-family: simhei;
     background: #eee;
