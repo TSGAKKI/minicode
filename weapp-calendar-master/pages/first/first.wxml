@@ -1,3 +1,22 @@
 <!--pages/first/first.wxml-->
-<text>pages/first/first.wxml</text>
+<view class='container'>
+<view class='YeMon'>
+<text >{{year}}年</text>
+<text>{{month}}月</text>
+</view>
 
+<view class='day'>
+<text>{{detail.curDay}}</text>
+</view>
+
+<view  class='lunardetail'>
+<text>{{detail.curInfo1}}</text>
+<text>{{detail.curInfo2}}</text>
+</view>
+</view>
+
+<view class='Fstdetail'>
+
+</view>
+
+<view  class='imag'></view>

@@ -1,1 +1,25 @@
 /* pages/first/first.wxss */
+.container{
+  height: 70vh;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.YeMon{
+  font-size: 40rpx;
+}
+
+.day{
+  flex-direction: column;
+  align-items: center;
+  color: rgb(16, 167, 48);
+ 
+  font-size: 100rpx;
+  font-weight: bold
+}
+
+.lunardetail{
+  display: flex;
+  flex-direction: column;
+}

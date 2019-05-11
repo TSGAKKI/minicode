@@ -1,18 +1,27 @@
 // pages/first/first.js
+//var detail=wx.getStorageSync('date')
+
+
+//console.log(detail)
+
+
 Page({
 
   /**
    * 页面的初始数据
    */
-  data: {
-
+  data: {date:new Date()
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({detail: wx.getStorageSync('date'),
+      year: new Date().getFullYear(),
+      month:new Date().getMonth()
+  })
+    // console.log(detail)
   },
 
   /**

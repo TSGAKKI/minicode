@@ -42,7 +42,6 @@ var pageData = {
         curInfo1: "",
         curInfo2: "",
     }
-    
 }
 
 //设置当前详细信息的索引，前台的详细信息会被更新
@@ -92,6 +91,17 @@ var refreshPageData = function(year, month, day){
 
     setCurDetailIndex(offset + day);
 };
+var carrydate= function (pageData) {
+  wx.setStorage({
+    key: 'date',
+    data: pageData.detailData,
+    success: function () {
+      console.log('success');
+    }
+  })
+}
+
+
 
 var curDate = new Date();
 var curMonth = curDate.getMonth();
@@ -101,13 +111,15 @@ refreshPageData(curYear, curMonth, curDay);
 //console.log (ccFile.hCal(curYear))
 
 
-
 Page({
    
-    data:pageData,
- 
+  data:pageData
+    ,
+  
     onLoad: function(options){
       //console.log(ccFile.hFtv);
+      carrydate(pageData);
+      console.log(pageData)
     },
 
     goToday: function(e){
