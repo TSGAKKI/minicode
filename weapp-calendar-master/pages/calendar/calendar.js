@@ -111,15 +111,23 @@ refreshPageData(curYear, curMonth, curDay);
 //console.log (ccFile.hCal(curYear))
 
 
+
+
 Page({
    
   data:pageData
     ,
+ 
   
     onLoad: function(options){
       //console.log(ccFile.hFtv);
       carrydate(pageData);
       console.log(pageData)
+      this.setData({
+        multiArray: multiArray,
+        objectMultiArray: objectMultiArray,
+        multiIndex: multiIndex
+      })
     },
 
     goToday: function(e){
