@@ -1,6 +1,9 @@
 /* pages/first/first.wxss */
+page{
+  height: 100%;
+}
 .container{
-  height: 70vh;
+  height: 100%;
   display: flex;
   justify-content: space-around;
   flex-direction: column;
@@ -22,4 +25,13 @@
 .lunardetail{
   display: flex;
   flex-direction: column;
+}
+.background{
+ height: 100%;
+ width: 100%;
+ 
+  position:fixed; 
+  background-size:100% 100%;
+  z-index: -1;
+ 
 }

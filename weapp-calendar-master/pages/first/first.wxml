@@ -1,5 +1,6 @@
 <!--pages/first/first.wxml-->
 <view class='container'>
+<image class='background' src="/images/icon/wan.jpg" mode="aspectFill"></image>
 <view class='YeMon'>
 <text >{{year}}年</text>
 <text>{{month}}月</text>
@@ -15,8 +16,3 @@
 </view>
 </view>
 
-<view class='Fstdetail'>
-
-</view>
-
-<view  class='imag'></view>

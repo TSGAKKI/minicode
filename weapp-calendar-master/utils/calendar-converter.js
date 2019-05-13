@@ -403,7 +403,7 @@ function calElement(sYear, sMonth, sDay, week, lYear, lMonth, lDay, isLeap, cYea
 // no matter solar or lunar
 var wDay;
 function CalendarConverter() {
-    this.solar2lunar = function (date,zu) {
+    this.solar2lunar = function (date) {
         var sYear = date.getFullYear(),
             sMonth = date.getMonth(),
             sDay = date.getDate(),
@@ -414,26 +414,26 @@ function CalendarConverter() {
             lunarDay = lunar.day,
             isLeap = lunar.isLeap;
 
-        return addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, isLeap,zu);
+        return addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, isLeap);
     }
 
-    // this.lunar2solar = function (date, isLeapMonth) {
-    //     var lunarYear = date.getFullYear(),
-    //         lunarMonth = date.getMonth() + 1,
-    //         lunarDay = date.getDate(),
-    //         solar = new Solar(date, isLeapMonth),
-    //         sYear = solar.year,
-    //         sMonth = solar.month,
-    //         sDay = solar.day,
-    //         weekDay = nStr1[new Date(sYear, sMonth, sDay).getDay()],
-    //         isLeap = solar.isLeap,
-    //         cYear, cMonth, cDay, that = {};
+    this.lunar2solar = function (date, isLeapMonth) {
+        var lunarYear = date.getFullYear(),
+            lunarMonth = date.getMonth() + 1,
+            lunarDay = date.getDate(),
+            solar = new Solar(date, isLeapMonth),
+            sYear = solar.year,
+            sMonth = solar.month,
+            sDay = solar.day,
+            weekDay = nStr1[new Date(sYear, sMonth, sDay).getDay()],
+            isLeap = solar.isLeap,
+            cYear, cMonth, cDay, that = {};
 
-    //     return addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, isLeap);
-    // }
+        return addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, isLeap);
+    }
 
 }
-function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, isLeap,zu) {
+function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, isLeap) {
   var hcal={};
   hcal= hCal(sYear);
 
@@ -474,7 +474,7 @@ function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, 
     if (tmp2 == (sDay - 1)) {
         that.solarTerms = solarTerm[sMonth * 2 + 1];
     }
-  if (zu == 0 || zu == 1) {
+
     //公历节日
     for (var i = 0, item; item = sFtv[i]; i++) {
         if (item.match(/^(\d{2})(\d{2})([\s\*])(.+)$/)) {
@@ -504,22 +504,21 @@ function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, 
               }
               }
               }
+
     // 农历节日
     for (i = 0, item; item = lFtv[i]; i++) {
-      if (item.match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
-        tmp1 = Number(RegExp.$1);
-        tmp2 = Number(RegExp.$2);
-        var lMonLen = monthDays(lunarYear, lunarMonth);
-        // 月份是12月，且为最后一天，则设置为春节
-        if ((tmp1 == lunarMonth && tmp2 == lunarDay) || (tmp2 == '00' && lunarMonth == 12 && lMonLen == lunarDay)) {
-          that.lunarFestival += RegExp.$4 + ' ';
-          break;
+        if (item.match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
+            tmp1 = Number(RegExp.$1);
+            tmp2 = Number(RegExp.$2);
+            var lMonLen = monthDays(lunarYear, lunarMonth);
+            // 月份是12月，且为最后一天，则设置为春节
+            if ((tmp1 == lunarMonth && tmp2 == lunarDay) || (tmp2 == '00' && lunarMonth == 12 && lMonLen == lunarDay)) {
+                that.lunarFestival += RegExp.$4 + ' ';
+                break;
+            }
         }
-      }
     }
-    }
-  
-  if(zu==2||zu==0){  //回族节日
+    //回族节日
   for (i = 0, item; item = hFtv[i]; i++) {
     if (item.match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
       tmp1 = Number(RegExp.$1);
@@ -532,7 +531,7 @@ function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, 
       }
     }
   }
-}
+
     return that;
 }
 
