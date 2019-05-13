@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/first/first",
+   
     "pages/calendar/calendar",
-    
+    "pages/first/first",
     "pages/my/my"
   ],
   "window": {

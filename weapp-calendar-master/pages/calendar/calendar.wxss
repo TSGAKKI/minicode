@@ -1,3 +1,6 @@
+.swiper{
+height: 70vh;
+}
 
 .calendar-root{
     font-family: simhei;

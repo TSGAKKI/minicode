@@ -3,7 +3,6 @@
 var ccFile = require('../../utils/calendar-converter.js')
 var calendarConverter = new ccFile.CalendarConverter();
  
-
 //月份天数表
 var DAY_OF_MONTH = [
     [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
@@ -44,6 +43,8 @@ var pageData = {
     }
 }
 
+var zu=0
+
 //设置当前详细信息的索引，前台的详细信息会被更新
 var setCurDetailIndex = function(index){
     var curEx = pageData.arrInfoEx[index];
@@ -54,7 +55,7 @@ var setCurDetailIndex = function(index){
 }
 
 //刷新全部数据
-var refreshPageData = function(year, month, day){
+var refreshPageData = function(year, month, day,zu){
     pageData.date = year+'年'+(month+1)+'月';
 
     var offset = new Date(year, month, 1).getDay();
@@ -64,7 +65,7 @@ var refreshPageData = function(year, month, day){
         pageData.arrIsShow[i] = i < offset || i >= getDayCount(year, month) + offset ? false : true;
         pageData.arrDays[i] = i - offset + 1;
         var d = new Date(year, month, i - offset + 1);
-        var dEx = calendarConverter.solar2lunar(d);
+        var dEx = calendarConverter.solar2lunar(d,zu);
       
         pageData.arrInfoEx[i] = dEx;
         if ("" != dEx.lunarFestival)
@@ -107,35 +108,61 @@ var curDate = new Date();
 var curMonth = curDate.getMonth();
 var curYear = curDate.getFullYear();
 var curDay = curDate.getDate()-1;
-refreshPageData(curYear, curMonth, curDay);
+refreshPageData(curYear, curMonth, curDay,zu);
 //console.log (ccFile.hCal(curYear))
 
+var array= ['全部民族','汉族', '回族'],
+  objectArray= [
+    {
+      id:0,
+      name:'全部名族'
+    }
+    ,{
+      id: 1,
+      name: '汉族'
+    },
+    {
+      id: 2,
+      name: '回族'
+    }
+  ],
+    index= 0
 
 
 
 Page({
    
   data:pageData
-    ,
- 
-  
+    , 
+
+  bindPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value
+    })
+    zu = e.detail.value
+    refreshPageData(curYear, curMonth, curDay, zu);
+    this.setData(pageData);
+  },
     onLoad: function(options){
-      //console.log(ccFile.hFtv);
       carrydate(pageData);
       console.log(pageData)
-      this.setData({
-        multiArray: multiArray,
-        objectMultiArray: objectMultiArray,
-        multiIndex: multiIndex
+      this. setData({
+        array:array,
+        index:index
       })
     },
 
     goToday: function(e){
+      this.setData({
+        currently:0
+      })
         curDate = new Date();           
         curMonth = curDate.getMonth();       
         curYear = curDate.getFullYear();       
         curDay = curDate.getDate()-1;
-        refreshPageData(curYear, curMonth, curDay);
+    
+        refreshPageData(curYear, curMonth, curDay,zu);
         this.setData(pageData);
     },
 
@@ -149,7 +176,7 @@ Page({
         {
             --curMonth;
         }
-        refreshPageData(curYear, curMonth, 0);
+        refreshPageData(curYear, curMonth, 0,zu);
         this.setData(pageData);
     },
 
@@ -163,7 +190,7 @@ Page({
         {
             ++curMonth;
         }
-        refreshPageData(curYear, curMonth, 0);
+        refreshPageData(curYear, curMonth, 0,zu);
         this.setData(pageData);
     },
 
@@ -176,7 +203,7 @@ Page({
 
     bindDateChange: function(e){
         var arr = e.detail.value.split("-");
-        refreshPageData(+arr[0], arr[1]-1, arr[2]-1);
+        refreshPageData(+arr[0], arr[1]-1, arr[2]-1,zu);
         this.setData(pageData);
     },
 });

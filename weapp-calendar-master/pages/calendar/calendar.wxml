@@ -8,10 +8,11 @@
             <view>跳转</view>
         </picker>
     </view>
-    <view class="calendar-head">
+    <view class="calendar-head" bindtransition='transition'>
         <view wx:for="日一二三四五六" wx:key="*this">{{item}}</view>
     </view>
-    <view class="calendar-body">
+    
+    <view class="calendar-body"  item-id='0'>
         <view class="calendar-body-rows" wx:for="123456" wx:for-index="row" wx:key="*this">
             <view class="calendar-body-cols" wx:for="1234567" wx:for-index="col" wx:key="*this" hover-class="tapchange">
                 <view class="calendar-body-item" wx:if="{{arrIsShow[row * 7 + col]}}" data-day-index="{{row * 7 + col}}" bindtap="selectDay">
@@ -25,9 +26,18 @@
             </view>
         </view>
     </view>
+    
     <view class="calendar-detail">
         <view class="calendar-detail-day">{{detailData.curDay}}</view>
         <view class="calendar-detail-info1">{{detailData.curInfo1}}</view>
         <view class="calendar-detail-info2">{{detailData.curInfo2}}</view>
     </view>
+</view>
+
+<view class="section">
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+    <view class="picker">
+      当前节日显示：{{array[index]}}
+    </view>
+  </picker>
 </view>

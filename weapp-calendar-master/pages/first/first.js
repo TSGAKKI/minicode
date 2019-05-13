@@ -19,7 +19,7 @@ Page({
   onLoad: function (options) {
     this.setData({detail: wx.getStorageSync('date'),
       year: new Date().getFullYear(),
-      month:new Date().getMonth()
+      month:new Date().getMonth()+1
   })
     // console.log(detail)
   },
