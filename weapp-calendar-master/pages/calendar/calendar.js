@@ -146,10 +146,11 @@ Page({
   },
     onLoad: function(options){
       carrydate(pageData);
-      console.log(pageData)
       this. setData({
         array:array,
-        index:index
+        index:index,
+        curDays: curDate.getDate(),
+        dates: curYear + '年' + (curMonth + 1) + '月'
       })
     },
 

@@ -1,5 +1,5 @@
-.swiper{
-height: 70vh;
+.todaycolor{
+  background: #45c05099;
 }
 
 .calendar-root{

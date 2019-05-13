@@ -16,12 +16,22 @@
         <view class="calendar-body-rows" wx:for="123456" wx:for-index="row" wx:key="*this">
             <view class="calendar-body-cols" wx:for="1234567" wx:for-index="col" wx:key="*this" hover-class="tapchange">
                 <view class="calendar-body-item" wx:if="{{arrIsShow[row * 7 + col]}}" data-day-index="{{row * 7 + col}}" bindtap="selectDay">
+                    <view class='todaycolor' wx:if="{{arrDays[row * 7 + col]==curDays&&dates===date}}">
                     <view class="calendar-body-day">
                         {{arrDays[row * 7 + col]}}
                     </view>
                     <view class="calendar-body-dayex">
                         {{arrInfoExShow[row * 7 + col]}}
+                    </view></view>
+
+                    <view wx:else>
+                    <view class="calendar-body-day">
+                        {{arrDays[row * 7 + col]}}
                     </view>
+                    <view class="calendar-body-dayex">
+                        {{arrInfoExShow[row * 7 + col]}}
+                    </view></view>
+
                 </view>
             </view>
         </view>
