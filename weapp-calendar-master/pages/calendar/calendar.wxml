@@ -1,3 +1,4 @@
+
 <view class="calendar-root">
     <view class="calendar-navbar">
         <view class="calendar-navbar-button" bindtap="goToday">今日</view>
@@ -25,12 +26,16 @@
                     </view></view>
 
                     <view wx:else hover-class="tapchange">
-                    <view class="calendar-body-day">
+                    <view class="calendar-body-day" >
                         {{arrDays[row * 7 + col]}}
                     </view>
-                    <view class="calendar-body-dayex">
+                    <view class="calendar-body-dayex lights" wx:if="{{arrInfolight[row * 7 + col]}}">
                         {{arrInfoExShow[row * 7 + col]}}
-                    </view></view>
+                    </view>
+                    <view class="calendar-body-dayex" wx:else>
+                        {{arrInfoExShow[row * 7 + col]}}
+                    </view>
+                    </view>
 
                 </view>
             </view>

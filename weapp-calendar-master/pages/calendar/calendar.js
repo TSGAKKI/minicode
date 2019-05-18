@@ -28,19 +28,19 @@ var getDay = function(index) {
 };
 
 var pageData = {
-    date: "",                //当前日期字符串
-    //arr数据是与索引对应的数据信息
-    arrIsShow: [],          //是否显示此日期
-    arrDays: [],            //关于几号的信息
-    arrInfoEx: [],          //农历节假日等扩展信息
-    arrInfoExShow: [],      //处理后用于显示的扩展信息
-
-    //选择一天时显示的信息
-    detailData: {
-        curDay: "",         //detail中显示的日信息
-        curInfo1: "",
-        curInfo2: "",
-    }
+  date: "",                //当前日期字符串
+  //arr数据是与索引对应的数据信息
+  arrIsShow: [],          //是否显示此日期
+  arrDays: [],            //关于几号的信息
+  arrInfoEx: [],          //农历节假日等扩展信息
+  arrInfoExShow: [],      //处理后用于显示的扩展信息
+  arrInfolight: [],
+  //选择一天时显示的信息
+  detailData: {
+    curDay: "",         //detail中显示的日信息
+    curInfo1: "",
+    curInfo2: "",
+  }
 }
 
 var zu=0
@@ -56,6 +56,7 @@ var setCurDetailIndex = function(index){
 
 //刷新全部数据
 var refreshPageData = function(year, month, day,zu){
+  
     pageData.date = year+'年'+(month+1)+'月';
 
     var offset = new Date(year, month, 1).getDay();
@@ -66,7 +67,6 @@ var refreshPageData = function(year, month, day,zu){
         pageData.arrDays[i] = i - offset + 1;
         var d = new Date(year, month, i - offset + 1);
         var dEx = calendarConverter.solar2lunar(d,zu);
-      var that = this
         pageData.arrInfoEx[i] = dEx;
       
         if(zu==0||zu==1){
@@ -90,19 +90,10 @@ var refreshPageData = function(year, month, day,zu){
         pageData.arrInfoExShow[i] = ' '
       }
        if("" != dEx.solarFestival) {
-         light=true
+         pageData.arrInfolight[i]=true;
         pageData.arrInfoExShow[i] = dEx.solarFestival;
       } 
     }
-    // if(light){
-    //   that.setData({ 
-    //     light:light 
-    //     })
-    // }else{
-    //   that.setData({
-    //      light:light
-    //       })
-    // }
     console.log(pageData)
     setCurDetailIndex(offset + day);
 };
@@ -150,7 +141,7 @@ var initial=function(){
     arrDays: [],            //关于几号的信息
     arrInfoEx: [],          //农历节假日等扩展信息
     arrInfoExShow: [],      //处理后用于显示的扩展信息
-
+    arrInfolight:[],
     //选择一天时显示的信息
     detailData: {
       curDay: "",         //detail中显示的日信息
@@ -183,7 +174,8 @@ Page({
         array:array,
         index:index,
         curDays: curDate.getDate(),
-        dates: curYear + '年' + (curMonth + 1) + '月'
+        dates: curYear + '年' + (curMonth + 1) + '月',
+        light
       })
     },
 
@@ -209,7 +201,7 @@ Page({
         else
         {
             --curMonth;
-        }
+      } pageData = initial()
         refreshPageData(curYear, curMonth, 0,zu);
         this.setData(pageData);
     },
@@ -223,7 +215,7 @@ Page({
         else
         {
             ++curMonth;
-        }
+      } pageData = initial()
         refreshPageData(curYear, curMonth, 0,zu);
         this.setData(pageData);
     },
