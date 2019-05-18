@@ -1,8 +1,14 @@
-// pages/first/first.js
-//var detail=wx.getStorageSync('date')
+var ccFile = require('../../utils/calendar-converter.js')
+var calendarConverter = new ccFile.CalendarConverter();
+var zu=0;
 
 
-//console.log(detail)
+var curDate= new Date(2019,4,12),
+  curMonth= new Date().getMonth(),
+    curYear= new Date().getFullYear(),
+      curDay= new Date().getDate()
+
+var dEx= calendarConverter.solar2lunar(curDate, zu)
 
 
 Page({
@@ -10,18 +16,23 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {date:new Date()
+  data: {
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({detail: wx.getStorageSync('date'),
-      year: new Date().getFullYear(),
-      month:new Date().getMonth()
+  this.setData({
+    curMonth:curMonth,
+    curYear:curYear,
+    curDay:curDay,
+   lunarM:dEx.lunarMonth,
+   lunarD:dEx.lunarDay,
+   lfst:dEx.lunarFestival,
+    sfst: dEx.solarFestival
   })
-    // console.log(detail)
+    console.log(dEx)
   },
 
   /**

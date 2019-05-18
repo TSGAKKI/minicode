@@ -1,3 +1,6 @@
+.todaycolor{
+  background: #45c05099;
+}
 
 .calendar-root{
     font-family: simhei;

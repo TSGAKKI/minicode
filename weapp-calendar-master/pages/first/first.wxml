@@ -1,18 +1,21 @@
 <!--pages/first/first.wxml-->
 <view class='container'>
-<image class='background' src="/images/icon/wan.jpg" mode="aspectFill"></image>
 <view class='YeMon'>
-<text >{{year}}年</text>
-<text>{{month}}月</text>
+<text >{{curYear}}年</text>
+<text>{{curMonth}}月</text>
 </view>
 
 <view class='day'>
-<text>{{detail.curDay}}</text>
+<text>{{curDay}}</text>
 </view>
 
 <view  class='lunardetail'>
-<text>{{detail.curInfo1}}</text>
-<text>{{detail.curInfo2}}</text>
+<text>农历{{lunarM}}月{{lunarD}}</text>
 </view>
 </view>
 
+<view class='Fstdetail'>
+{{lfst}}{{sfst}}
+</view>
+
+<view  class='imag'></view>
