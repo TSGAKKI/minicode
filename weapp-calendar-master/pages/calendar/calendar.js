@@ -8,7 +8,7 @@ var DAY_OF_MONTH = [
     [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
     [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 ];
-
+var light=false
 //判断当前年是否闰年
 var isLeapYear = function(year){
     if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))
@@ -66,8 +66,10 @@ var refreshPageData = function(year, month, day,zu){
         pageData.arrDays[i] = i - offset + 1;
         var d = new Date(year, month, i - offset + 1);
         var dEx = calendarConverter.solar2lunar(d,zu);
-      
+      var that = this
         pageData.arrInfoEx[i] = dEx;
+      
+        if(zu==0||zu==1){
         if ("" != dEx.lunarFestival)
         {
             pageData.arrInfoExShow[i] = dEx.lunarFestival;
@@ -80,27 +82,39 @@ var refreshPageData = function(year, month, day,zu){
         {
             pageData.arrInfoExShow[i] = dEx.lunarDay;
         }
-
-      if ("" != dEx.solarFestival) {
-        pageData.arrInfoExShow[i] = dEx.solarFestival;
-      } 
       if ("" != dEx.solarTerms) {
         pageData.arrInfoExShow[i] = dEx.solarTerms;
-      }      
-        
+          }
+        }
+      if (zu != 0 && zu != 1) {
+        pageData.arrInfoExShow[i] = ' '
+      }
+       if("" != dEx.solarFestival) {
+         light=true
+        pageData.arrInfoExShow[i] = dEx.solarFestival;
+      } 
     }
-
+    // if(light){
+    //   that.setData({ 
+    //     light:light 
+    //     })
+    // }else{
+    //   that.setData({
+    //      light:light
+    //       })
+    // }
+    console.log(pageData)
     setCurDetailIndex(offset + day);
 };
-var carrydate= function (pageData) {
-  wx.setStorage({
-    key: 'date',
-    data: pageData.detailData,
-    success: function () {
-      console.log('success');
-    }
-  })
-}
+// var carrydate= function (pageData) {
+//   wx.setStorage({
+//     key: 'date',
+//     data: pageData.detailData,
+//     success: function () {
+//       console.log('success');
+//     }
+//   })
+// }
 
 
 
@@ -128,7 +142,23 @@ var array= ['全部民族','汉族', '回族'],
   ],
     index= 0
 
+var initial=function(){
+  return {
+    date: "",                //当前日期字符串
+    //arr数据是与索引对应的数据信息
+    arrIsShow: [],          //是否显示此日期
+    arrDays: [],            //关于几号的信息
+    arrInfoEx: [],          //农历节假日等扩展信息
+    arrInfoExShow: [],      //处理后用于显示的扩展信息
 
+    //选择一天时显示的信息
+    detailData: {
+      curDay: "",         //detail中显示的日信息
+      curInfo1: "",
+      curInfo2: "",
+    }
+  }
+}
 
 Page({
    
@@ -141,11 +171,14 @@ Page({
       index: e.detail.value
     })
     zu = e.detail.value
+    
+    pageData=initial()
+    console.log(pageData)
     refreshPageData(curYear, curMonth, curDay, zu);
     this.setData(pageData);
   },
     onLoad: function(options){
-      carrydate(pageData);
+      //carrydate(pageData);
       this. setData({
         array:array,
         index:index,
@@ -162,7 +195,7 @@ Page({
         curMonth = curDate.getMonth();       
         curYear = curDate.getFullYear();       
         curDay = curDate.getDate()-1;
-    
+        pageData=initial()
         refreshPageData(curYear, curMonth, curDay,zu);
         this.setData(pageData);
     },

@@ -1,3 +1,7 @@
+.lights{
+  background: #45c05099;
+}
+
 .todaycolor{
   background: #45c05099;
 }

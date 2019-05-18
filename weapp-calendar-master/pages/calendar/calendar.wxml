@@ -20,7 +20,7 @@
                     <view class="calendar-body-day">
                         {{arrDays[row * 7 + col]}}
                     </view>
-                    <view class="calendar-body-dayex">
+                    <view class="calendar-body-dayex" >
                         {{arrInfoExShow[row * 7 + col]}}
                     </view></view>
 

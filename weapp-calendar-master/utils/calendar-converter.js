@@ -55,13 +55,13 @@ var cmonthName = new Array('正', '二', '三', '四', '五', '六', '七', '八
 
 //回族节日
 var hFtv=new Array(
-  "1001 开斋节",
-  "1210 古尔邦节",
+   "0110 阿舒拉日",
   "0312 圣纪节",
-  "0110 阿舒拉日",
   "0727 登宵夜",
   "0815 拜拉特夜",
   "0901 盖德尔夜",
+  "1001 开斋节",
+  "1210 古尔邦节",
   "0101 新年");
 
 //公历节日 *表示放假日
@@ -127,10 +127,10 @@ var hmonthDay =new Array(29,30)
 //回历转换
 function hcanlcon(hcal,fmonth,fday){
   var sum=0 ,that={};
-  for(var i=0;i<fmonth;i++){
+  for(var i=1;i<=fmonth;i++){
     sum+=hmonthDay[i%2]
   }
- sum= sum-1;
+
   that=new Date(hcal.year,hcal.month-1,hcal.day+sum);
   return that
 }
@@ -145,12 +145,12 @@ function hcalenderEle (hyear,year,month,day){
 
 //回历转换算法
 function hCal(year){
- var that={},hyear,hday,hmonth,all,i,floa,year
+ var that={},hyear,hday,hmonth,all,i,floa
   hyear=parseInt(year-622+(year-622)/32)
- 
-  floa = ((0.970233 * (hyear - 1) + 622.5479) - Math.floor((0.970233 * (hyear - 1) + 622.5479)))
-  year = parseInt((0.970233 * (hyear - 1) + 622.5479))
+  floa = ((0.970223 * (hyear - 1) + 622.5479) - Math.floor((0.970223 * (hyear - 1) + 622.5479)))
+  year = parseInt((0.970223 * (hyear - 1) + 622.5479))
    all = parseInt(floa*365.2425)
+  console.log(all)
   for(i=0;all>31;i++){
     // if((i==2)&&((year%4==0)&&(year%100!=0)||(year%400==0))){
     if (isLeap(year)&&i==2) {
@@ -162,7 +162,7 @@ function hCal(year){
       //console.log(monthDay[monthD[i]]);
    } 
   }
-  that=new hcalenderEle(hyear,year,i+1,all-5)
+  that=new hcalenderEle(hyear,year,i+1,all)
   return that
 }
 
