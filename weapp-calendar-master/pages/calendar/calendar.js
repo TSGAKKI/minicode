@@ -69,7 +69,7 @@ var refreshPageData = function(year, month, day,zu){
         var dEx = calendarConverter.solar2lunar(d,zu);
         pageData.arrInfoEx[i] = dEx;
       
-        if(zu==0||zu==1){
+        if(zu!=2){
         if ("" != dEx.lunarFestival)
         {
             pageData.arrInfoExShow[i] = dEx.lunarFestival;
@@ -86,28 +86,21 @@ var refreshPageData = function(year, month, day,zu){
         pageData.arrInfoExShow[i] = dEx.solarTerms;
           }
         }
-      if (zu != 0 && zu != 1) {
+        
+      if (zu ==2) {
         pageData.arrInfoExShow[i] = ' '
       }
-       if("" != dEx.solarFestival) {
+
+       if("" != dEx.solarFestival||""!=dEx.lunarFestival) {
          pageData.arrInfolight[i]=true;
+      }
+
+      if ("" != dEx.solarFestival){
         pageData.arrInfoExShow[i] = dEx.solarFestival;
-      } 
+      }
     }
-    console.log(pageData)
     setCurDetailIndex(offset + day);
 };
-// var carrydate= function (pageData) {
-//   wx.setStorage({
-//     key: 'date',
-//     data: pageData.detailData,
-//     success: function () {
-//       console.log('success');
-//     }
-//   })
-// }
-
-
 
 var curDate = new Date();
 var curMonth = curDate.getMonth();
@@ -116,7 +109,7 @@ var curDay = curDate.getDate()-1;
 refreshPageData(curYear, curMonth, curDay,zu);
 //console.log (ccFile.hCal(curYear))
 
-var array= ['全部民族','汉族', '回族'],
+var array = ['全部民族', '汉族', '回族', '壮族', '满族', '维吾尔族', '苗族'],
   objectArray= [
     {
       id:0,
@@ -129,6 +122,20 @@ var array= ['全部民族','汉族', '回族'],
     {
       id: 2,
       name: '回族'
+    }, {
+      id: 3,
+      name: '壮族'
+    },
+    {
+      id: 4,
+      name: '满族'
+    },
+    {
+      id: 2,
+      name: '维吾尔族'
+    }, {
+      id: 6,
+      name: '苗族'
     }
   ],
     index= 0
@@ -169,7 +176,6 @@ Page({
     this.setData(pageData);
   },
     onLoad: function(options){
-      //carrydate(pageData);
       this. setData({
         array:array,
         index:index,

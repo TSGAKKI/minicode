@@ -6,6 +6,8 @@
   flex-direction: column;
 }
 
+
+
 .YeMon{
   font-size: 40rpx;
 }

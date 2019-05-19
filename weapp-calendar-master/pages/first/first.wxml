@@ -12,10 +12,12 @@
 <view  class='lunardetail'>
 <text>农历{{lunarM}}月{{lunarD}}</text>
 </view>
-</view>
 
 <view class='Fstdetail'>
 {{lfst}}{{sfst}}
 </view>
+</view>
+
+
 
 <view  class='imag'></view>

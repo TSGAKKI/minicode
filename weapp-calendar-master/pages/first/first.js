@@ -24,7 +24,7 @@ Page({
    */
   onLoad: function (options) {
   this.setData({
-    curMonth:curMonth,
+    curMonth:curMonth+1,
     curYear:curYear,
     curDay:curDay,
    lunarM:dEx.lunarMonth,
@@ -32,7 +32,6 @@ Page({
    lfst:dEx.lunarFestival,
     sfst: dEx.solarFestival
   })
-    console.log(dEx)
   },
 
   /**

@@ -1,16 +1,4 @@
-///////////////////////////////////////////////////
-//
-// lunarInfo
-//
-///////////////////////////////////////////////////
 
-// base data about chinese year informace
-// 保存公历农历之间的转换信息:以任意一年作为起点，
-// 把从这一年起若干年(依需要而定)的农历信息保存起来。 要保存一年的信息，只要两个信息就够了: 1)农历每个月的大小;2)今年是否有闰月，闰几月以及闰月的大小。 用一个整数来保存这些信息就足够了。 具体的方法是:用一位来表示一个月的大小，大月记为1，小月记为0，
-// 这样就用掉12位(无闰月)或13位(有闰月)，再用高四位来表示闰月的月份，没有闰月记为0。 ※-----例----: 2000年的信息数据是0xc96，化成二进制就是110010010110B，
-// 表示的含义是:1、2、5、8、10、11月大，其余月份小。 2001年的农历信息数据是0x1a95(因为闰月，所以有13位)，
-// 具体的就是1、2、4、5、8、10、12月大， 其余月份小(0x1a95=1101010010101B)，
-// 4月的后面那一个0表示的是闰4月小，接着的那个1表示5月大。 这样就可以用一个数组来保存这些信息。在这里用数组lunarInfo[]来保存这些信息
 var lunarInfo = new Array(
     0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260,
     0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2,
@@ -59,10 +47,42 @@ var hFtv=new Array(
   "0312 圣纪节",
   "0727 登宵夜",
   "0815 拜拉特夜",
-  "0901 盖德尔夜",
+  "0901 斋月",
   "1001 开斋节",
   "1210 古尔邦节",
   "0101 新年");
+
+//壮族节日
+var zFtv=new Array(
+  "0202 土地日",
+  "0303 三月三",
+ "0325 陇端节",
+  "0707 尝新节",
+  "0408 牛魂节",
+  "0130 吃立节",
+  "0101 蛙婆节"
+);
+
+//苗族节日
+var miFtv = new Array(
+    "招龙节",
+    "0315 姐妹节",
+    "0408 赶秋节",
+    "0713 吃新节",
+    "1201 苗年"
+);
+
+//满族节日
+var mFtv = new Array(
+  "0115 上元节",
+  "0125 添仓节",
+  "0201 太阳日",
+  "0606 虫王节",
+  "0826 绝粮日",
+  "1013 颁金节"
+);
+
+
 
 //公历节日 *表示放假日
 var sFtv = new Array(
@@ -119,10 +139,6 @@ var monthDay =new Array(30,31,28)
 
 var hmonthDay =new Array(29,30)
 
-// function h_FconvDay (fmonth,fday){
-//   this.month=fmonth;
-//   this.day=fday;
-// }
 
 //回历转换
 function hcanlcon(hcal,fmonth,fday){
@@ -150,16 +166,13 @@ function hCal(year){
   floa = ((0.970223 * (hyear - 1) + 622.5479) - Math.floor((0.970223 * (hyear - 1) + 622.5479)))
   year = parseInt((0.970223 * (hyear - 1) + 622.5479))
    all = parseInt(floa*365.2425)
-  console.log(all)
   for(i=0;all>31;i++){
-    // if((i==2)&&((year%4==0)&&(year%100!=0)||(year%400==0))){
+
     if (isLeap(year)&&i==2) {
    all-=monthDay[monthD[i]]+1;
-      //console.log(monthDay[monthD[i]]); 
     }
    else{
      all-=monthDay[monthD[i]];
-      //console.log(monthDay[monthD[i]]);
    } 
   }
   that=new hcalenderEle(hyear,year,i+1,all)
@@ -494,8 +507,6 @@ function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, 
                tmp2 = Number(RegExp.$3);
         
               if (((sMonth + 1) == 5 && (sDay > 8 && sDay < 14)) || ((sMonth + 1) == 6&&(sDay>15 && sDay< 21))){
-            
-                
                 if (new Date(sYear, sMonth, sDay).getDay()==0){  
                         that.solarFestival += RegExp.$5  + ' ';
                 break;
@@ -516,15 +527,60 @@ function addFstv(sYear, sMonth, sDay, weekDay, lunarYear, lunarMonth, lunarDay, 
           break;
         }
       }
+      
     }
     }
-  
+  if (zu == 0 || zu == 4) {
+    //满族节日
+    for (i = 0, item; item = mFtv[i]; i++) {
+      if (item.match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
+        tmp1 = Number(RegExp.$1);
+        tmp2 = Number(RegExp.$2);
+        var lMonLen = monthDays(lunarYear, lunarMonth);
+        // 月份是12月，且为最后一天，则设置为春节
+        if ((tmp1 == lunarMonth && tmp2 == lunarDay) || (tmp2 == '00' && lunarMonth == 12 && lMonLen == lunarDay)) {
+          that.lunarFestival += RegExp.$4 + ' ';
+          break;
+        }
+      }
+    }
+  }
+  if (zu == 0 || zu == 6){
+  //苗族节日
+  for (i = 0, item; item = miFtv[i]; i++) {
+    if (item.match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
+      tmp1 = Number(RegExp.$1);
+      tmp2 = Number(RegExp.$2);
+      var lMonLen = monthDays(lunarYear, lunarMonth);
+      // 月份是12月，且为最后一天，则设置为春节
+      if ((tmp1 == lunarMonth && tmp2 == lunarDay) || (tmp2 == '00' && lunarMonth == 12 && lMonLen == lunarDay)) {
+        that.lunarFestival += RegExp.$4 + ' ';
+        break;
+      }
+    }
+    }
+  }
+//壮族节日
+  if (zu == 0||zu==3){
+  for (i = 0, item; item = zFtv[i]; i++) {
+    if (item.match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
+      tmp1 = Number(RegExp.$1);
+      tmp2 = Number(RegExp.$2);
+      var lMonLen = monthDays(lunarYear, lunarMonth);
+      // 月份是12月，且为最后一天，则设置为春节
+      if ((tmp1 == lunarMonth && tmp2 == lunarDay) || (tmp2 == '00' && lunarMonth == 12 && lMonLen == lunarDay)) {
+        that.lunarFestival += RegExp.$4 + ' ';
+        break;
+      }
+    }
+  }
+}
+
   if(zu==2||zu==0){  //回族节日
   for (i = 0, item; item = hFtv[i]; i++) {
     if (item.match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
       tmp1 = Number(RegExp.$1);
       tmp2 = Number(RegExp.$2);
-      //console.log(hcanlcon(hcal, tmp1, tmp2).getMonth())
       if (sMonth == hcanlcon(hcal, tmp1, tmp2).getMonth() && sDay == hcanlcon(hcal, tmp1, tmp2).getDate()){
         that.solarFestival += RegExp.$4 + ' ';
         break;
