@@ -30,7 +30,7 @@
       },
       {
         "pagePath": "pages/my/my",
-        "text": "我的",
+        "text": "备忘录",
         "iconPath": "images/icon/my.png",
         "selectedIconPath": "images/icon/my-selected.png"
       }
