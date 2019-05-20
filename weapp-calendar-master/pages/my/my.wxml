@@ -1,13 +1,8 @@
 <!--pages/my/my.wxml-->
 <view class="container">
+<image class="blackImage" src="/images/icon/back1.gif" mode="aspectFill"></image>
   <view   class="header">    
-    欢迎    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-    <text class="font"> 获取昵称</text>
-     </button>
-    <block wx:else>
-      
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+    欢迎   <open-data type="userNickName"></open-data>
 使用
   </view>
 

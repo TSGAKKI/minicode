@@ -37,7 +37,8 @@
          
     ],
     "color": "#000",
-    "selectedColor": "#f00"
+    "selectedColor": "#f00",
+    "backgroundColor": "#c0c0c0"
   }
   
 }

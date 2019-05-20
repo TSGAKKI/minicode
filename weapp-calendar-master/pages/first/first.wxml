@@ -1,5 +1,6 @@
 <!--pages/first/first.wxml-->
 <view class='container'>
+<image class="blackImage" src="/images/icon/back4.jpg" mode="aspectFill"></image>
 <view class='YeMon'>
 <text >{{curYear}}年</text>
 <text>{{curMonth}}月</text>
@@ -20,4 +21,5 @@
 
 
 
-<view  class='imag'></view>
+
+

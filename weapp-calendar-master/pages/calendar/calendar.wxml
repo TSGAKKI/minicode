@@ -1,5 +1,6 @@
 
 <view class="calendar-root">
+ <view class="backcolor"> 
     <view class="calendar-navbar">
         <view class="calendar-navbar-button" bindtap="goToday">今日</view>
         <view class="calendar-navbar-button" bindtap="goLastMonth">{{"<"}}</view>
@@ -41,6 +42,7 @@
             </view>
         </view>
     </view>
+   </view>
     
     <view class="calendar-detail">
         <view class="calendar-detail-day">{{detailData.curDay}}</view>
@@ -49,10 +51,12 @@
     </view>
 </view>
 
+
 <view class="section">
+
   <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-    <view class="picker">
-      当前节日显示：{{array[index]}}
-    </view>
+    <text class='picker'>当前节日显示： {{array[index]}}</text>
+    
   </picker>
+  
 </view>
