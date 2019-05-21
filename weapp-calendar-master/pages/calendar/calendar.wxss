@@ -1,6 +1,6 @@
 
 page{
-  background: #00ffff;
+  background: #eee;
 }
 .lights{
   color: #0859b699;
@@ -13,7 +13,7 @@ page{
 
 .calendar-root{
     font-family: simhei;
-    background: #00ffff;
+    background: #98fb98;
     height:100%;
 }
 
@@ -21,7 +21,7 @@ page{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #00FF7F; 
+    /* background: #00FF7F;  */
     height: 83rpx;
 }
 .calendar-navbar-button{
@@ -44,7 +44,7 @@ page{
     justify-content: center;
     align-items: center;
     height: 80rpx;
-    background: #7cfc00;
+    /* background: #00ff7f; */
     font-size: 35rpx;
 }
 .calendar-head view{
@@ -53,7 +53,7 @@ page{
 }
 
 .calendar-body{
-  background: #ffdab9;
+  /* background: #ffdab9; */
     
 }
 .calendar-body-rows{
@@ -112,7 +112,7 @@ page{
       border-radius:25rpx;
 }
 .section{
-  background: #ffa500;
+  color: red;
   position: absolute;
   bottom: 60rpx;
   left: 110rpx;

@@ -55,7 +55,7 @@
 <view class="section">
 
   <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-    <text class='picker'>当前节日显示： {{array[index]}}</text>
+    <text class='picker'>当前民族显示： {{array[index]}}</text>
     
   </picker>
   
