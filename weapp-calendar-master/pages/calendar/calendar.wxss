@@ -1,6 +1,6 @@
 
 page{
-  background: #eee;
+  background:white;
 }
 .lights{
   color: #0859b699;
@@ -13,7 +13,7 @@ page{
 
 .calendar-root{
     font-family: simhei;
-    background: #98fb98;
+    background: white;
     height:100%;
 }
 
@@ -53,7 +53,7 @@ page{
 }
 
 .calendar-body{
-  /* background: #ffdab9; */
+  background: white;
     
 }
 .calendar-body-rows{

@@ -1,6 +1,6 @@
 /* pages/my/my.wxss */
 .container{
-  color:#6fa6cf;
+  color:black;
 }
 .header{
   text-align: center;
@@ -12,7 +12,7 @@
   height:50px;
 }
 .header::after{
-  content:'LXQBY';
+  content:'';
   position: absolute;
   width: 20rem;
   z-index: 1;
@@ -29,6 +29,7 @@
 /*输入区域*/
 .input-wrap{  
   margin: 30rpx 10rpx;
+  color:black;
 }
 .flex-row{
   display: flex;

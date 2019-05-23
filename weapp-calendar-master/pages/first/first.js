@@ -3,7 +3,7 @@ var calendarConverter = new ccFile.CalendarConverter();
 var zu=0;
 
 
-var curDate= new Date(2019,4,12),
+var curDate= new Date(),
   curMonth= new Date().getMonth(),
     curYear= new Date().getFullYear(),
       curDay= new Date().getDate()
